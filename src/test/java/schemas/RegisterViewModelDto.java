@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class RegisterViewModelDto  {
-    String userName;
-    String password;
+public class RegisterViewModelDto {
+     String userName;
+     String password;
 }
