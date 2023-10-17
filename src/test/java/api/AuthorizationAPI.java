@@ -8,8 +8,7 @@ public class AuthorizationAPI extends ApiBase {
 
     public Response registerNewUser(UserDTO user) {
         String endPoint = "/Account/v1/User";
-        Response response = postRequest(endPoint, 201, user);
-        return response;
+        return postRequest(endPoint, 201, user);
     }
 
     public Response login(UserDTO user) {
