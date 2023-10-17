@@ -14,5 +14,5 @@ import lombok.Setter;
 public class RegisterViewModelDto {
      String userName;
      String password;
-    // String description;
+    
 }

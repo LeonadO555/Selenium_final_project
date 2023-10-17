@@ -6,13 +6,32 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+//public class ApiBase {
+//
+//    public static final String BASE_URI = "https://demoqa.com/";
+//    private final RequestSpecification spec;
+//
+//    public ApiBase() {
+//        this.spec = new RequestSpecBuilder()
+//                .setBaseUri(BASE_URI)
+//                .setContentType(ContentType.JSON)
+//                .build();
+//    }
+//
+//    public ApiBase(String token) {
+//        this.spec = new RequestSpecBuilder()
+//                .setBaseUri(BASE_URI)
+//                .setContentType(ContentType.JSON)
+//                .addHeader("Authorization", token)
+//                .build();
+//    }
+
 public class ApiBase {
-    final String Base_URI = "https://demoqa.com";
-    final String API_KEY = "Book Store Credentials";
+    final String Base_URI = "https://demoqa.com/";
+    final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9";
     RequestSpecification spec = new RequestSpecBuilder()
             .setBaseUri(Base_URI)
             .setContentType(ContentType.JSON)
-            .addHeader( "Access-Token", API_KEY)
             .build();
     public Response getRequest(String endPoint, Integer responseCode){
         Response response = RestAssured.given()
