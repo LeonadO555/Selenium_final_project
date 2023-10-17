@@ -4,6 +4,7 @@ import api.AuthorizationAPI;
 import api.UserAPI;
 import com.github.javafaker.Faker;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import schemas.UserDTO;
@@ -16,34 +17,44 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
 
     @Test
     public void registerLoginDeleteNewUserViaApi() {
-        // generate new token
+        // generate new user
         UserDTO newUserData = generateNewRandomUser();
-        String token = authorizationAPI.generateToken(newUserData);
-        userAPI = new UserAPI(token);
 
         //register new user
-        JsonPath createdUser = userAPI.registerNewUser(newUserData).jsonPath();
-        String userId = createdUser.getString("userId");
-        //get data of new contact and compare
-        JsonPath expectedCreatedUser = userAPI.getUser(userId).jsonPath();
-        Assert.assertEquals(createdUser, expectedCreatedUser, createdUser + "is not equal to " + expectedCreatedUser);
+        JsonPath createdUser = authorizationAPI.registerNewUser(newUserData).jsonPath();
+        String userId = createdUser.getString("userID");
+
+        // generate token
+        String token = authorizationAPI.generateToken(newUserData);
+        userAPI = new UserAPI(token);
+        Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
 
         // login created user
         authorizationAPI.login(newUserData);
-        Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
+
+        //get data of created user
+        JsonPath expectedCreatedUser = userAPI.getUser(userId).jsonPath();
+        Assert.assertEquals(
+                createdUser.getString("username"),
+                expectedCreatedUser.getString("username"),
+                createdUser + "is not equal to " + expectedCreatedUser
+        );
 
         // delete created user
         userAPI.deleteUser(userId);
+
         // verify user was deleted
-        String responseMessage = userAPI.getUser(userId).jsonPath().getString("message");
-        Assert.assertEquals(responseMessage, "User not found!");
+        Response response = authorizationAPI.isDeleted(newUserData);
+        Assert.assertEquals(response.jsonPath().getString("message"), "User not found!");
     }
 
     private UserDTO generateNewRandomUser() {
         Faker faker = new Faker();
         UserDTO register = new UserDTO();
         register.setUserName(faker.internet().uuid());
-        register.setPassword(faker.internet().uuid());
+        // due to the faker password generation bug https://github.com/faker-ruby/faker/issues/2512
+        // it was decided to hard code it
+        register.setPassword("NewTest567&");
         return register;
     }
 }

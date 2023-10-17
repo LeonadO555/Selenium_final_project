@@ -6,6 +6,12 @@ import schemas.UserDTO;
 
 public class AuthorizationAPI extends ApiBase {
 
+    public Response registerNewUser(UserDTO user) {
+        String endPoint = "/Account/v1/User";
+        Response response = postRequest(endPoint, 201, user);
+        return response;
+    }
+
     public Response login(UserDTO user) {
         String endPoint = "/Account/v1/Login";
         return postRequest(endPoint, 200, user);
@@ -16,7 +22,7 @@ public class AuthorizationAPI extends ApiBase {
         Response response = postRequest(endPoint, 200, user);
 
         JsonPath jsonPath = response.jsonPath();
-        return jsonPath.getString("token");
+        return "Bearer " + jsonPath.getString("token");
     }
 
     public boolean isAuthorized(UserDTO user) {
@@ -24,5 +30,10 @@ public class AuthorizationAPI extends ApiBase {
         Response response = postRequest(endPoint, 200, user);
 
         return Boolean.parseBoolean(response.asString());
+    }
+
+    public Response isDeleted(UserDTO user) {
+        String endPoint = "/Account/v1/Authorized";
+        return postRequest(endPoint, 404, user);
     }
 }

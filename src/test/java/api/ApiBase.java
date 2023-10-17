@@ -26,11 +26,11 @@ public class ApiBase {
                 .build();
     }
 
-    public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, String userId) {
+    public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .when()
-                .pathParam(paramName, userId)
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .get(endPoint)
                 .then().log().all()
@@ -52,12 +52,12 @@ public class ApiBase {
         return response;
     }
 
-    public Response putRequest(String endPoint, Integer responseCode, Object body, String isbn) {
+    public Response putRequest(String endPoint, Integer responseCode, Object body, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .body(body)
                 .when()
-                .pathParam("isbn", isbn)
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .put(endPoint)
                 .then().log().all()
@@ -66,11 +66,11 @@ public class ApiBase {
         return response;
     }
 
-    public Response deleteRequest(String endPoint, Integer responseCode, String paramName, String userId) {
+    public Response deleteRequest(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .when()
-                .pathParam(paramName, userId)
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .delete(endPoint)
                 .then().log().all()
