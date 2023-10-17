@@ -13,6 +13,7 @@ public RegisterViewModelDto generateRandomDataForCreateAccount(){
     dto = new RegisterViewModelDto();
     dto.setUserName(faker.internet().uuid());
     dto.setPassword(faker.internet().uuid());
+    //dto.setDescription(faker.internet().uuid());
     return dto;
 }
 public Response createAccount (Integer code){
