@@ -2,7 +2,6 @@ package e2e.api;
 
 import api.AuthorizationAPI;
 import api.UserAPI;
-import com.github.javafaker.Faker;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -18,7 +17,7 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
     @Test
     public void registerLoginDeleteNewUserViaApi() {
         // generate new user
-        UserDTO newUserData = generateNewRandomUser();
+        UserDTO newUserData = authorizationAPI.generateNewRandomUser();
 
         //register new user
         JsonPath createdUser = authorizationAPI.registerNewUser(newUserData).jsonPath();
@@ -29,8 +28,8 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
         userAPI = new UserAPI(token);
         Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
 
-        // login created user
-        authorizationAPI.login(newUserData);
+        //check user registered
+        userAPI.getUser(userId);
 
         //get data of created user
         JsonPath expectedCreatedUser = userAPI.getUser(userId).jsonPath();
@@ -40,21 +39,14 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
                 createdUser + "is not equal to " + expectedCreatedUser
         );
 
+        // login created user
+        authorizationAPI.login(newUserData);
+
         // delete created user
         userAPI.deleteUser(userId);
 
         // verify user was deleted
         Response response = authorizationAPI.isDeleted(newUserData);
         Assert.assertEquals(response.jsonPath().getString("message"), "User not found!");
-    }
-
-    private UserDTO generateNewRandomUser() {
-        Faker faker = new Faker();
-        UserDTO register = new UserDTO();
-        register.setUserName(faker.internet().uuid());
-        // due to the faker password generation bug https://github.com/faker-ruby/faker/issues/2512
-        // it was decided to hard code it
-        register.setPassword("NewTest567&");
-        return register;
     }
 }
