@@ -10,7 +10,7 @@ public class LoginTest extends TestBase {
 
     @Test
     public void userCanLoginWithValidData() {
-        loginPage = new LoginPage(app.driver); // переменная loginPage берет на себя новый экземпляр класса
+        loginPage = new LoginPage(app.driver);
         loginPage.login(UserCredentials.VALID_USERNAME, UserCredentials.VALID_PASSWORD);
         loginPage.confirmSuccessfulLogin();
     }
