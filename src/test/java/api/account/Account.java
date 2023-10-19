@@ -18,7 +18,6 @@ public class Account extends ApiBase {
         return dto;
     }
 
-
     public Response createAccount(Integer code) {
         String endPoint = "/Account/v1/User";
         response = postRequest(endPoint, code, randomDataForCreateAccount());

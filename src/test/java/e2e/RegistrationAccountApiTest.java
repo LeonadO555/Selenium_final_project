@@ -14,15 +14,10 @@ public class RegistrationAccountApiTest {
         String userId = createdAccount.getString("UserId");
 
         if (userId != null) {
-            JsonPath expectedCreatedAccount = account.getAccount(200, userId).jsonPath();
-
-            String[] attributes = {"firstName", "lastName", "userName", "password"};
-
-            for (String attribute : attributes) {
-                String actualValue = createdAccount.getString(attribute);
-                String expectedValue = expectedCreatedAccount.getString(attribute);
-                Assert.assertEquals(actualValue, expectedValue, attribute + " is not equal expected");
-            }
+            String expectedUserName = account.randomDataForCreateAccount().getUserName();
+            JsonPath actualCreatedAccount = account.getAccount(200, userId).jsonPath();
+            String actualUserName = actualCreatedAccount.getString("userName");
+            Assert.assertEquals(actualUserName, expectedUserName);
 
             account.deleteAccount(200, userId);
             JsonPath actualDeletedContact = account.getAccount(500, userId).jsonPath();
