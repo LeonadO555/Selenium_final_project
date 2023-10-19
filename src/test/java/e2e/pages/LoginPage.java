@@ -18,8 +18,6 @@ public class LoginPage extends PageBase {
     @FindBy(xpath = "//*[@id = 'userName']")
     WebElement userNameInput;
 
-    // //*[@id="userForm"]//*[@id="password"]
-
     @FindBy(xpath = "//*[@id = 'password']")
     WebElement passwordInput;
 
