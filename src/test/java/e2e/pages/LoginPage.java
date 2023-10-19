@@ -4,18 +4,17 @@ import enums.AccountCredentials;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import util.ScrollUtils;
 
 public class LoginPage extends PageBase {
     public LoginPage(WebDriver driver) {
         super(driver);
     }
-
     @FindBy(xpath = "//*[@id='userForm']")
     WebElement userForm;
     @FindBy(xpath = "//*[@id='userName']")
     WebElement userNameInput;
-    //*[@id='userForm']//*[@id='userName']
-    @FindBy(xpath = "//*[@id='userForm']//*[@id='password']")
+    @FindBy(xpath = "//*[@id='password']")
     WebElement passwordInput;
     @FindBy(xpath = "//*[@id='login']")
     WebElement loginButton;
@@ -27,14 +26,20 @@ public class LoginPage extends PageBase {
         getWait().forClickable(loginButton);
     }
 
+    public void scrollToLoginButton() {
+        ScrollUtils.scrollToElement(driver, loginButton);
+        getWait().forVisibility(loginButton);
+    }
+
     public void login(AccountCredentials userName, AccountCredentials password) {
         loginButton.click();
+        scrollToLoginButton();
         userNameInput.sendKeys(userName.value);
         passwordInput.sendKeys(password.value);
         click(loginButton);
     }
 
-        public void confirmSuccessfulLogin () {
+    public void confirmSuccessfulLogin () {
             getWait().forInvisibility(userForm);
         }
 

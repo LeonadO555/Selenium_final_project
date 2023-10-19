@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import util.ScrollUtils;
 import util.Wait;
 
 import java.awt.*;
@@ -27,6 +28,10 @@ public class PageBase {
 
     public Wait getWait() {
         return new Wait(driver);
+    }
+
+    public ScrollUtils getScroll() {
+        return new ScrollUtils();
     }
     public void click(WebElement element) {
         element.isDisplayed();
