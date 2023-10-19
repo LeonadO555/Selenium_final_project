@@ -39,7 +39,7 @@ public class Login extends ApiBase{
     }
 
     public String login(String username, String password) {
-        response = postRequest("Account/v1/Login", 200, loginData(username, password));
+        response = postRequest("Account/v1/User", 200, loginData(username, password));
         return response.jsonPath().getString("token");
     }
 }

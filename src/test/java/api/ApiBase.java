@@ -8,23 +8,29 @@ import io.restassured.specification.RequestSpecification;
 
 public class ApiBase {
 
-    String token;
-//    final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlBldHIiLCJwYXNzd29yZCI6IlBldHIxMjNAIiwiaWF0IjoxNjk3MTM4MTM1fQ.S9rM8xusaZboulHyUqKX0kfoqbXiXqYeehJk8TuRwVo";
+    public static final String BASE_URI = "https://demoqa.com/";
+    private final RequestSpecification spec;
+
+    public ApiBase() {
+        this.spec = new RequestSpecBuilder()
+                .setBaseUri(BASE_URI)
+                .setContentType(ContentType.JSON)
+                .build();
+    }
+
     public ApiBase(String token) {
-        this.token = token;
+        this.spec = new RequestSpecBuilder()
+                .setBaseUri(BASE_URI)
+                .setContentType(ContentType.JSON)
+                .addHeader("Authorization", token)
+                .build();
     }
-    final String BASE_URI = "https://demoqa.com/";
 
-    RequestSpecification spec = new RequestSpecBuilder()
-            .setBaseUri(BASE_URI)
-            .setContentType(ContentType.JSON)
-            .addHeader("Authorization", token)
-            .build();
-
-    public Response getRequest(String endPoint, Integer responseCode){
+    public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .when()
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .get(endPoint)
                 .then().log().all()
@@ -33,20 +39,7 @@ public class ApiBase {
         return response;
     }
 
-    public Response getRequestWithParam(String endPoint, Integer responseCode,String paramName, int id){
-        Response response = RestAssured.given()
-                .spec(spec)
-                .when()
-                .pathParam(paramName, id)
-                .log().all()
-                .get(endPoint)
-                .then().log().all()
-                .extract().response();
-        response.then().assertThat().statusCode(responseCode);
-        return response;
-    }
-
-    public Response postRequest(String endPoint, Integer responseCode, Object body){
+    public Response postRequest(String endPoint, Integer responseCode, Object body) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .body(body)
@@ -59,11 +52,11 @@ public class ApiBase {
         return response;
     }
 
-    public Response deleteRequest(String endPoint, Integer responseCode, int id){
+    public Response deleteRequest(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .when()
-                .pathParam("id", id)
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .delete(endPoint)
                 .then().log().all()

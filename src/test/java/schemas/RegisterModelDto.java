@@ -1,5 +1,6 @@
 package schemas;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,9 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class RegisterModelDto {
-    @JsonProperty("id")
-    private int id;
+    @JsonProperty("UserId")
+    private int UserId;
 
     @JsonProperty("firstName")
     private String firstName;
@@ -26,8 +29,8 @@ public class RegisterModelDto {
     @JsonProperty("password")
     private String password;
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return UserId;
     }
 
     public String getFirstName() {
@@ -46,10 +49,10 @@ public class RegisterModelDto {
         return password;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int UserId) {
+        this.UserId = UserId;
     }
-
+//
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -57,12 +60,11 @@ public class RegisterModelDto {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
     public void setPassword(String password) {
-        this.userName = password;
+        this.password = password;
     }
 }
