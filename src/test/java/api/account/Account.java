@@ -12,10 +12,12 @@ public class Account extends ApiBase {
     public RegisterModelDto randomDataForCreateAccount() {
         Faker faker = new Faker();
         dto = new RegisterModelDto();
-        dto.setUserName(faker.internet().uuid());
+        String userName = faker.internet().uuid();
+        dto.setUserName(userName);
         dto.setPassword("Abc123$@");
         return dto;
     }
+
 
     public Response createAccount(Integer code) {
         String endPoint = "/Account/v1/User";

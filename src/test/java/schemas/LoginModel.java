@@ -22,15 +22,17 @@ public class LoginModel {
     private String password;
 
     public String getUserId() {
+
         return UserId;
     }
 
     public void setUserName(String userName) {
+
         this.userName = userName;
     }
 
     public void setPassword(String password) {
 
-        this.userName = password;
+        this.password = password;
     }
 }

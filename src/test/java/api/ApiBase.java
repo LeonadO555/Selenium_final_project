@@ -22,7 +22,7 @@ public class ApiBase {
         this.spec = new RequestSpecBuilder()
                 .setBaseUri(BASE_URI)
                 .setContentType(ContentType.JSON)
-                .addHeader("Authorization", token)
+                .addHeader("Authorization", "Bearer " + token)
                 .build();
     }
 
