@@ -1,4 +1,4 @@
-package e2e.pages;
+package e2e.ui;
 
 public class RegistrLoginApiAddBookUiCheckAddedBookApiTest {
 }
