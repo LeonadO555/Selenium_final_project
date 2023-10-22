@@ -24,7 +24,7 @@ public class LoginTest extends TestBase {
     public void userCanNotLoginWithInvalidPassword() {
         loginPage = new LoginPage(app.driver);
         loginPage.login(AccountCredentials.VALID_USERNAME, AccountCredentials.INVALID_PASSWORD);
-        loginPage.confirmSuccessfulLogin();
+        loginPage.confirmUnsuccessfulLogin();
     }
 
     @Test
