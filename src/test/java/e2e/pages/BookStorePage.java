@@ -1,38 +1,37 @@
 package e2e.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import java.util.List;
-import java.util.Random;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BookStorePage extends PageBase {
     public BookStorePage(WebDriver driver) {
         super(driver);
     }
 
-    public void clickOnBooksCard() {
-        List<WebElement> books = driver.findElements(By.xpath(""));
-        if (!books.isEmpty()) {
-            // Выбор случайной книги
-            Random random = new Random();
-            int randomIndex = random.nextInt(books.size());
-            WebElement randomBook = books.get(randomIndex);
-            randomBook.click();
-        } else {
-            System.out.println("No books found on the page.");
+    @FindBy(xpath = "//a[contains(text(), 'Git Pocket Guide')]")
+    WebElement firstBook;
+
+    public void waitForLoading() {
+        getWait().forVisibility(firstBook);
+    }
+
+    public boolean isBookAdded(String bookTitle) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        try {
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(@ng-reflect-result, '" + bookTitle + "')]")));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
         }
-
-//    public void clickOnBooksCard(String book) {
-//        driver.findElement(By.xpath("//*[contains(@mr-2, '" + book + "')]/ancestor::tr//*[@class='col-12 mt-4 col-md-6']")).click();
-//    }
     }
-
-    public List<WebElement> getBooks() {
-        return null;
-    }
-
-    public boolean isBookInCollection(String title, String author) {
-        return false;
+    public void clickOnBooksCard() {
+        firstBook.click();
     }
 }
