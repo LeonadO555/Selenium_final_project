@@ -9,13 +9,14 @@ import io.restassured.specification.RequestSpecification;
 public class ApiBase {
 
     public static final String BASE_URI = "https://demoqa.com/";
-final String Api_KEY = "";
+    private static final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImRvbWlrIiwicGFzc3dvcmQiOiI1MDMyOTY3RGdmJCIsImlhdCI6MTY5ODI1MjI0Mn0.khTvKbmb0R-EVxffw7T04_RVyU-A6FG68jr0tqM1uqA";
+    //final String Api_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImRvbWlrIiwicGFzc3dvcmQiOiI1MDMyOTY3RGdmJCIsImlhdCI6MTY5ODI1MjI0Mn0.khTvKbmb0R-EVxffw7T04_RVyU-A6FG68jr0tqM1uqA"
+        ;
     RequestSpecification spec = new RequestSpecBuilder()
             .setBaseUri(BASE_URI)
             .setContentType(ContentType.JSON)
             .addHeader("Access-Token", API_KEY)
             .build();
-    private final RequestSpecification spec;
 
     public ApiBase() {
         this.spec = new RequestSpecBuilder()
@@ -83,5 +84,9 @@ final String Api_KEY = "";
                 .extract().response();
         response.then().assertThat().statusCode(responseCode);
         return response;
+    }
+
+    public RequestSpecification getSpec() {
+        return spec;
     }
 }

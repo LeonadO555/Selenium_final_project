@@ -22,7 +22,7 @@ public class Account extends ApiBase {
     public Response createAccount(Integer code) {
         String endPoint = "/Account/v1/User";
         response = postRequest(endPoint, code, generateRandomDataForCreateAccount());
-        //response.as(RegisterViewModelDto.class);
+        response.as(RegisterViewModelDto.class);
         return response;
     }
     public Response createAccount(Integer code) {

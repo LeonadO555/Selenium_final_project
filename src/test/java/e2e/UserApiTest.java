@@ -41,16 +41,10 @@ public class UserApiTest {
             for (Map.Entry<String, String> object : objectEditedData.entrySet()) {
                 String actualResult = object.getKey();
                 String expectedResult = object.getValue();
-               // Assert.assertEquals(actualResult, expectedResult, actualResult + "not equal" + expectedResult);
             }
-
-
             account.deleteAccount(200, UUID);
             JsonPath actualDeleteAccount = account.getAccount(500, "UUID").jsonPath();
             Assert.assertEquals(actualDeleteAccount, "UUID");
-
-
         }
-
     }
 }
