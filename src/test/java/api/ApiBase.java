@@ -1,4 +1,4 @@
-package bookstore;
+package api;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -7,18 +7,31 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class ApiBase {
-    final String BASE_URI = "https://demoqa.com/text-box";
-    final String API_KEY = "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImV4cCI6MjEwNjk3ODI5Nn0.GM1wsoRV2QoAsD6wKmIk7N49DDpuCejK4BC9H9YItJvesH5vft8HO2uqTPnGQJwJ5oXKS2OILqP1yoanMnIMkA";
-    RequestSpecification spec = new RequestSpecBuilder()
-            .setBaseUri(BASE_URI)
-            .setContentType(ContentType.JSON)
-            .addHeader("Access-Token",API_KEY)
-            .build();
 
-    public Response getRequest(String endPoint, Integer responseCode){
+    public static final String BASE_URI = "https://demoqa.com/";
+    private final RequestSpecification spec;
+
+    public ApiBase() {
+        this.spec = new RequestSpecBuilder()
+                .setBaseUri(BASE_URI)
+                .setContentType(ContentType.JSON)
+                .build();
+    }
+
+    public ApiBase(String token) {
+        this.spec = new RequestSpecBuilder()
+                .setBaseUri(BASE_URI)
+                .setContentType(ContentType.JSON)
+                .addHeader("Authorization", token)
+                .build();
+    }
+
+
+    public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .when()
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .get(endPoint)
                 .then().log().all()
@@ -27,20 +40,7 @@ public class ApiBase {
         return response;
     }
 
-    public Response getRequestWithParam(String endPoint, Integer responseCode,String paramName, int id){
-        Response response = RestAssured.given()
-                .spec(spec)
-                .when()
-                .pathParam(paramName, id)
-                .log().all()
-                .get(endPoint)
-                .then().log().all()
-                .extract().response();
-        response.then().assertThat().statusCode(responseCode);
-        return response;
-    }
-
-    public Response postRequest(String endPoint, Integer responseCode, Object body){
+    public Response postRequest(String endPoint, Integer responseCode, Object body) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .body(body)
@@ -53,11 +53,12 @@ public class ApiBase {
         return response;
     }
 
-    public Response putRequest(String endPoint, Integer responseCode, Object body){
+    public Response putRequest(String endPoint, Integer responseCode, Object body, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .body(body)
                 .when()
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .put(endPoint)
                 .then().log().all()
@@ -66,11 +67,11 @@ public class ApiBase {
         return response;
     }
 
-    public Response deleteRequest(String endPoint, Integer responseCode, int id){
+    public Response deleteRequest(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .when()
-                .pathParam("id", id)
+                .pathParam(paramName, paramValue)
                 .log().all()
                 .delete(endPoint)
                 .then().log().all()
