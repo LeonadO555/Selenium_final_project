@@ -11,10 +11,11 @@ public class Account extends ApiBase {
     Response response;
     RegisterViewModelDto dto;
     Faker faker = new Faker();
+    String userName = faker.internet().uuid();
 
     public RegisterViewModelDto generateRandomDataForCreateAccount() {
         dto = new RegisterViewModelDto();
-        dto.setUserName(faker.internet().uuid());
+        dto.setUserName(userName);
         dto.setPassword("5032867Dgf$");
         return dto;
     }
@@ -22,16 +23,10 @@ public class Account extends ApiBase {
     public Response createAccount(Integer code) {
         String endPoint = "/Account/v1/User";
         response = postRequest(endPoint, code, generateRandomDataForCreateAccount());
-        response.as(RegisterViewModelDto.class);
+        //response.as(RegisterViewModelDto.class);
         return response;
     }
-    public Response createAccount(Integer code) {
-        String endPoint = "Account/v1/Authorized";
-        response = postRequest(endPoint,code, generateRandomDataForCreateAccount(());
-        response.as(RegisterViewModelDto.class);
-        return response;
 
-    }
 
     public Response deleteAccount(Integer code,  String UUID) {
         String endPoint = "/Account/v1/User/{UserId}";
