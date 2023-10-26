@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.ScrollUtils;
-
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
@@ -31,15 +30,6 @@ public class BookCardPage extends PageBase {
         ScrollUtils.scrollToElement(driver, bookStoreApi);
         getWait().forVisibility(bookStoreApi);
     }
-
-//    public void clickOnProfilePageButton() {
-//        try {
-//            scrollToLoginButton();
-//            profilePageButton.click();
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Element not found : " + e.getMessage());
-//        }
-//    }
 
     public void clickOnProfilePageButton() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

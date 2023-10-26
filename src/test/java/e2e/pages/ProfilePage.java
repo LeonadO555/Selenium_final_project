@@ -40,7 +40,7 @@ public class ProfilePage extends PageBase {
     public void clickGoToBookStoreButton() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            WebElement goToStoreButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@title='Delete']")));
+            WebElement goToStoreButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='gotoStore']")));
             goToStoreButton.click();
         } catch (TimeoutException e) {
             System.out.println("Element not found: " + e.getMessage());
@@ -49,13 +49,23 @@ public class ProfilePage extends PageBase {
     public void clickDeleteButton() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            WebElement deleteButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='gotoStore']")));
+            WebElement deleteButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@title='Delete']")));
             deleteButton.click();
         } catch (TimeoutException e) {
             System.out.println("Element not found: " + e.getMessage());
         }
     }
+    public boolean isBookDeleted(String bookTitle) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        By bookLocator = By.xpath("//a[contains(text(), '" + bookTitle + "')]");
+        try {
+            WebElement book = wait.until(ExpectedConditions.presenceOfElementLocated(bookLocator));
+            return !book.isDisplayed();
+        } catch (TimeoutException e) {
+            return true;
+        }
 //    public void clickOnDeleteOkButton() {
 //        deleteOkButton.click();
 //    }
+    }
 }

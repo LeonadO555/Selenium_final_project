@@ -1,7 +1,7 @@
 package e2e;
 
 import api.account.Account;
-import e2e.pages.BookCardPage;
+//import e2e.pages.BookCardPage;
 import e2e.pages.BookStorePage;
 import e2e.pages.LoginPage;
 import e2e.pages.ProfilePage;
@@ -11,14 +11,15 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
-public class CreateAccountLoginAddAndDeleteBooksApiViaUITest extends TestBase {
+public class WorkWithBooksApiViaUiTest extends TestBase {
     Account account;
     LoginPage loginPage;
     ProfilePage profilePage;
     BookStorePage bookStorePage;
-    BookCardPage bookCardPage;
+//    BookCardPage bookCardPage;
+
     @Test
-    public void createAccountLoginAddAndDeleteBooksApiViaUITest() {
+    public void workWithBooksApiViaUiTest() {
         account = new Account();
         JsonPath createdAccount = account.createAccount(201).jsonPath();
         String userId = createdAccount.getString("UserId");
@@ -30,8 +31,8 @@ public class CreateAccountLoginAddAndDeleteBooksApiViaUITest extends TestBase {
             Assert.assertEquals(actualUserName, expectedUserName);
 
             account.deleteAccount(200, userId);
-            JsonPath actualDeletedContact = account.getAccount(500, userId).jsonPath();
-            Assert.assertEquals(actualDeletedContact.getString("message"), "Error! This user doesn't exist in our DB");
+            JsonPath actualDeletedAccount = account.getAccount(500, userId).jsonPath();
+            Assert.assertEquals(actualDeletedAccount.getString("message"), "Error! This user doesn't exist in our DB");
         } else {
             System.out.println("UserId is null or not present in the response.");
         }
@@ -53,20 +54,7 @@ public class CreateAccountLoginAddAndDeleteBooksApiViaUITest extends TestBase {
         profilePage.clickGoToBookStoreButton();
         profilePage.waitForLoading();
         profilePage.clickDeleteButton();
-//        profilePage.clickOnDeleteOkButton();
-//      bookCardPage = new BookCardPage(app.driver);
-//      bookCardPage.waitForLoading();
-//      bookCardPage.clickOnProfilePageButton();
-//      bookCardPage.waitForLoading();
-//      bookCardPage.clickDeleteButton();
-
-//
-//        bookCardPage.clickDeleteButton();
-//        bookCardPage.clickOnDeleteOkButton();
-//        Assert.assertFalse(bookStorePage.isBookInCollection(title, author));
-//        } else {
-//            System.out.println("No books found on the page.");
-
+        Assert.assertTrue(profilePage.isBookDeleted("Git Pocket Guide"));
     }
 }
 
