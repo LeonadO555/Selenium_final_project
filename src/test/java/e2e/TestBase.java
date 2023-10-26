@@ -1,4 +1,4 @@
-package e2e.ui;
+package e2e;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class TestBase {
 
     @AfterMethod
     public void tearDown() {
-        app.stop();
+//        app.stop();
     }
 
     @AfterMethod

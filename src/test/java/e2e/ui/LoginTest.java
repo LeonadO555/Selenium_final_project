@@ -1,5 +1,6 @@
 package e2e.ui;
 
+import e2e.TestBase;
 import e2e.enums.UserCredentials;
 import e2e.pages.LoginPage;
 import org.testng.annotations.Test;
