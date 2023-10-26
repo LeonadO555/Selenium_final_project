@@ -1,6 +1,6 @@
 package e2e.pages;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
 
 public class AlertHandling extends PageBase {
 
@@ -8,22 +8,8 @@ public class AlertHandling extends PageBase {
         super(driver);
     }
 
-    public void waitForAlertPresence() {
-        getWait().forAlertPresence(driver);
-    }
-
     public void simpleAlertHandling() {
-//        driver.switchTo().alert().getText();
+        getWait().forAlertPresence(driver);
         driver.switchTo().alert().accept();
-    }
-
-    public void confirmationAlertHandling() {
-        // This step will result in an alert on screen
-        WebElement element = driver.findElement(By.id("confirmButton"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click()", element);
-        Alert confirmationAlert = driver.switchTo().alert();
-        String alertText = confirmationAlert.getText();
-        System.out.println("Alert text is " + alertText);
-        confirmationAlert.accept();
     }
 }

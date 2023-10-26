@@ -23,9 +23,6 @@ public class LoginPage extends PageBase {
     @FindBy(xpath = "//*[@id = 'login']")
     WebElement loginButton;
 
-    @FindBy(xpath = "//*[@id = 'newUser']")
-    WebElement newUserButton;
-
     public void login(UserCredentials username, UserCredentials password) {
         userNameInput.sendKeys(username.value);
         passwordInput.sendKeys(password.value);
@@ -43,5 +40,4 @@ public class LoginPage extends PageBase {
     public void confirmLoginFormOpened() {
         getWait().forVisibility(loginForm);
     }
-
 }

@@ -16,7 +16,6 @@ public class BookStorePage extends PageBase {
     @FindBy(xpath = "//*[@class= 'col-12 mt-4 col-md-6']")
     WebElement bookStoreForm;
 
-
     public void waitForLoadingBookStoreForm() {
         getWait().forVisibility(bookStoreForm);
         getWait().forClickable(bookStoreForm);
@@ -30,5 +29,4 @@ public class BookStorePage extends PageBase {
     public void clickFirstBookLink() {
         firstBookLink.click();
     }
-
 }

@@ -41,7 +41,6 @@ public class UITestForLoginUserAdd_DeleteBookLogoutUser extends TestBase {
         bookPage.clickAddToYourCollectionButton();
 
         alertHandling = new AlertHandling(app.driver);
-        alertHandling.waitForAlertPresence();
         alertHandling.simpleAlertHandling();
 
         bookPage.scrollToProfileButton();
@@ -51,10 +50,11 @@ public class UITestForLoginUserAdd_DeleteBookLogoutUser extends TestBase {
         profilePage.waitForLoadingProfileForm();
         profilePage.checkThatBookAdded();
         profilePage.clickTrashButton();
-//        alertHandling.confirmationAlertHandling();
-//        alertHandling.simpleAlertHandling();
-//        profilePage.checkThatBookDeleted();
-//        profilePage.clickLogOutButton();
-//        loginPage.confirmLoginFormOpened();
+        profilePage.waitForLoadingModalAlert();
+        profilePage.modalAlertHandling();
+        alertHandling.simpleAlertHandling();
+        profilePage.checkThatBookDeleted();
+        profilePage.clickLogOutButton();
+        loginPage.confirmLoginFormOpened();
     }
 }

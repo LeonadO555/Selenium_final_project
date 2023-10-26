@@ -16,24 +16,11 @@ public class BookPage extends PageBase {
     @FindBy(xpath = "//*[@class='text-right fullButton']//*[@id='addNewRecordButton']")
     WebElement addToYourCollectionButton;
 
-    @FindBy(xpath = "//*[@class='text-left fullButton']//*[@id='addNewRecordButton']")
-    WebElement backToBookStoreButton;
-
-    @FindBy(xpath = "//*[@id='title-wrapper']//*[@id='userName-value']")
-    WebElement titleName;
-
-    @FindBy(xpath = "")
-    WebElement bookAddedPopUpDialog;
-
-    @FindBy(xpath = "")
-    WebElement okButtonOnBookAddedPopUpDialog;
-
     @FindBy(xpath = "//*[@class='element-list collapse show']//li[@id='item-3']//*[@class='text']")
     WebElement profileButton;
 
     @FindBy(xpath = "//*[@class= 'books-wrapper']")
     WebElement bookInfoForm;
-
 
     public void waitForLoadingBookInfoForm() {
         getWait().forVisibility(bookInfoForm);
@@ -50,7 +37,6 @@ public class BookPage extends PageBase {
         getWait().forVisibility(profileButton);
         getWait().forClickable(profileButton);
     }
-
 
     public void clickAddToYourCollectionButton() {
         try {

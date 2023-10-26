@@ -13,35 +13,11 @@ public class ProfilePage extends PageBase {
         super(driver);
     }
 
-    @FindBy(xpath = "//*[@id ='searchBox']")
-    WebElement searchInput;
-
-    @FindBy(xpath = "//*[@class ='input-group-append']")
-    WebElement searchButton;
-
     @FindBy(xpath = "//*[@class= 'text-right col-md-5 col-sm-12']//*[@id ='submit']")
     WebElement logOutButton;
 
-    @FindBy(xpath = "//*[@class='rt-tr-group'][1]")
-    WebElement firstTableRow;
-
-    @FindBy(xpath = "//*[@id='see-book-Git Pocket Guide']")
-    WebElement bookName;
-
     @FindBy(xpath = "//*[@class = 'rt-tr -odd']//*[@id='delete-record-undefined']")
     WebElement trashButton;
-
-    @FindBy(xpath = "//*[@class='text-right button di']//*[@id ='submit']")
-    WebElement deleteAllBooksButton;
-
-    @FindBy(xpath = "//*[@role='dialog']")
-    WebElement deleteAllBooksDialog;
-
-    @FindBy(xpath = "//*[@id='closeSmallModal-ok']")
-    WebElement okButtonInDeleteAllBooksDialog;
-
-    @FindBy(xpath = "//*[@class= 'text-center button']//*[@id ='submit']")
-    WebElement deleteAccountButton;
 
     @FindBy(xpath = "//*[@id ='gotoStore']")
     WebElement goToBookStoreButton;
@@ -52,6 +28,11 @@ public class ProfilePage extends PageBase {
     @FindBy(xpath = "//*[text()='No rows found']")
     WebElement emptyProfileForm;
 
+    @FindBy(xpath = "//*[@class = 'modal-content']")
+    WebElement modalAlert;
+
+    @FindBy(xpath = "//*[@id = 'closeSmallModal-ok']")
+    WebElement okButtonInAlert;
 
     public void waitForLoadingBookStoreButton() {
         getWait().forVisibility(goToBookStoreButton);
@@ -76,10 +57,6 @@ public class ProfilePage extends PageBase {
         getWait().forClickable(profileForm);
     }
 
-    public void clickBookName() {
-        bookName.click();
-    }
-
     public void checkThatBookAdded() {
         WebElement title = driver.findElement(By.id("see-book-Git Pocket Guide"));
         String actualTitle = title.getText();
@@ -91,27 +68,19 @@ public class ProfilePage extends PageBase {
         trashButton.click();
     }
 
+    public void waitForLoadingModalAlert() {
+        getWait().forVisibility(modalAlert);
+    }
+
+    public void modalAlertHandling() {
+        okButtonInAlert.click();
+    }
+
     public void checkThatBookDeleted() {
         getWait().forVisibility(emptyProfileForm);
-    }
-//
-//
-//    {
-//        WebElement title = driver.findElement(By.id("see-book-Git Pocket Guide"));
-//        String actualTitle = title.getText();
-//        String expectedElementText = "Git Pocket Guide";
-//        Assert.assertEquals(actualTitle, expectedElementText, "Expected and Actual are not the same");
-//    }
-
-
-    //*[text()="No rows found"]
-//    id="see-book-“+nameBook+””
-    public void confirmBookWasDeleted() {
-        getWait().forInvisibility(bookName);
     }
 
     public void clickLogOutButton() {
         logOutButton.click();
     }
-
 }
