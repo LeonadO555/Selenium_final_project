@@ -21,4 +21,9 @@ public class PageBase {
         element.isDisplayed();
         element.click();
     }
+
+    public void simpleAlertHandling() {
+        getWait().forAlertPresence(driver);
+        driver.switchTo().alert().accept();
+    }
 }

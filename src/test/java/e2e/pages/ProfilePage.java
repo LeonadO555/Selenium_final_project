@@ -1,11 +1,9 @@
 package e2e.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
 import util.Scroll;
 
 public class ProfilePage extends PageBase {
@@ -34,6 +32,9 @@ public class ProfilePage extends PageBase {
     @FindBy(xpath = "//*[@id = 'closeSmallModal-ok']")
     WebElement okButtonInAlert;
 
+    @FindBy(id = "see-book-Git Pocket Guide")
+    WebElement addedBookTitle;
+
     public void waitForLoadingBookStoreButton() {
         getWait().forVisibility(goToBookStoreButton);
         getWait().forClickable(goToBookStoreButton);
@@ -57,14 +58,18 @@ public class ProfilePage extends PageBase {
         getWait().forClickable(profileForm);
     }
 
-    public void checkThatBookAdded() {
-        WebElement title = driver.findElement(By.id("see-book-Git Pocket Guide"));
-        String actualTitle = title.getText();
-        String expectedElementText = "Git Pocket Guide";
-        Assert.assertEquals(actualTitle, expectedElementText, "Expected and Actual are not the same");
+//    public void checkThatBookAdded() {
+//        WebElement title = driver.findElement(By.id("see-book-Git Pocket Guide"));
+//        String actualTitle = title.getText();
+//        String expectedElementText = "Git Pocket Guide";
+//        Assert.assertEquals(actualTitle, expectedElementText, "Expected and Actual are not the same");
+//    }
+
+    public String getAddedBookTitle() {
+        return addedBookTitle.getText();
     }
 
-    public void clickTrashButton() {
+    public void clickDeleteButtonRow() {
         trashButton.click();
     }
 
