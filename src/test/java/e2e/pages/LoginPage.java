@@ -39,6 +39,14 @@ public class LoginPage extends PageBase {
         click(loginButton);
     }
 
+    public void loginWithRegistrationData(){
+        loginButton.click();
+        scrollToLoginButton();
+        userNameInput.sendKeys();
+        passwordInput.sendKeys();
+        click(loginButton);
+    }
+
     public void confirmSuccessfulLogin () {
             getWait().forInvisibility(userForm);
         }
