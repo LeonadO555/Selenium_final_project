@@ -15,20 +15,20 @@ public class RegistrationAccountApiTest {
 
     @Test
     public void registrationAccountApiTest() {
-        RegisterModelDto newUserData = account.createNewRandomAccount();
-        JsonPath createdUser = account.registerNewAccount(newUserData).jsonPath();
-        String userId = createdUser.getString("userID");
+        RegisterModelDto newAccountData = account.createNewRandomAccount();
+        JsonPath createdAccount = account.registerNewAccount(newAccountData).jsonPath();
+        String userId = createdAccount.getString("userID");
 
 
-        String token = account.generateToken(newUserData);
+        String token = account.generateToken(newAccountData);
         loginApi = new LoginApi(token);
-        Assert.assertTrue(account.authorizeAccount(newUserData, token));
+        Assert.assertTrue(account.authorizeAccount(newAccountData, token));
 
-        JsonPath expectedCreatedUser = loginApi.getAccount(userId).jsonPath();
-        Assert.assertEquals(createdUser.getString("username"), expectedCreatedUser.getString("username"), "Usernames should match");
+        JsonPath expectedCreatedAccount = loginApi.getAccount(userId).jsonPath();
+        Assert.assertEquals(createdAccount.getString("username"), expectedCreatedAccount.getString("username"), "Usernames should match");
 
         loginApi.deleteAccount(userId);
-        Response response = account.deleteAccount(newUserData);
+        Response response = account.deleteAccount(newAccountData);
         Assert.assertEquals(response.jsonPath().getString("message"), "User not found!", "User should be deleted");
     }
 }

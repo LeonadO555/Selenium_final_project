@@ -39,11 +39,11 @@ public class LoginPage extends PageBase {
         click(loginButton);
     }
 
-    public void loginWithRegistrationData(){
+    public void loginWithRegistrationData(String userName, String password){
         loginButton.click();
         scrollToLoginButton();
-        userNameInput.sendKeys();
-        passwordInput.sendKeys();
+        userNameInput.sendKeys(userName);
+        passwordInput.sendKeys(password);
         click(loginButton);
     }
 
