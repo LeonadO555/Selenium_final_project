@@ -23,26 +23,10 @@ public class BookPage extends PageBase {
     @FindBy(xpath = "//*[@id='title-wrapper']//*[@id='userName-value']")
     WebElement bookTitle;
 
-    //    public void waitForLoadingBookInfoForm() {
-//        getWait().forVisibility(bookInfoForm);
-//        getWait().forClickable(bookInfoForm);
-//    }
     public void waitForLoading() {
         getWait().forVisibility(bookInfoForm);
         getWait().forClickable(bookInfoForm);
     }
-
-//
-//    public void scrollToProfileButton() {
-//        Scroll.scrollToElement(driver, profileButton);
-//        getWait().forVisibility(profileButton);
-//        getWait().forClickable(profileButton);
-//    }
-
-//    public void waitForLoadingProfileButton() {
-//        getWait().forVisibility(profileButton);
-//        getWait().forClickable(profileButton);
-//    }
 
     public void waitProfileButtonAfterScroll() {
         Scroll.scrollToElement(driver, profileButton);
@@ -62,13 +46,6 @@ public class BookPage extends PageBase {
         profileButton.click();
     }
 
-    //    public String checkThatSelectedBookOpened() {
-//        WebElement title = driver.findElement(By.xpath("//*[@id='title-wrapper']//*[@id='userName-value']"));
-//        String actualTitle = title.getText();
-//        String expectedElementText = "Git Pocket Guide";
-//        Assert.assertEquals(actualTitle, expectedElementText, "Expected and Actual are not same");
-//        return actualTitle;
-//    }
     public String getTitleBook() {
         return bookTitle.getText();
     }

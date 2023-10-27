@@ -23,7 +23,7 @@ public class PageBase {
     }
 
     public void simpleAlertHandling() {
-        getWait().forAlertPresence(driver);
+        getWait().forAlertPresence();
         driver.switchTo().alert().accept();
     }
 }

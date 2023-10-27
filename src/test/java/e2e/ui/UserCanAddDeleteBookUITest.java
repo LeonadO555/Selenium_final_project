@@ -9,7 +9,7 @@ import e2e.pages.ProfilePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class UITestForLoginUserAdd_DeleteBookLogoutUser extends TestBase {
+public class UserCanAddDeleteBookUITest extends TestBase {
 
     LoginPage loginPage;
 
@@ -20,11 +20,10 @@ public class UITestForLoginUserAdd_DeleteBookLogoutUser extends TestBase {
     BookPage bookPage;
 
     @Test
-    public void uITestForLoginUserAdd_DeleteBookLogoutUser() {
+    public void userCanAddDeleteBookUITest() {
         String expectedBookTitle = "Git Pocket Guide";
 
         loginPage = new LoginPage(app.driver);
-
         loginPage.login(UserCredentials.VALID_USERNAME, UserCredentials.VALID_PASSWORD);
         loginPage.confirmSuccessfulLogin();
 
@@ -40,33 +39,26 @@ public class UITestForLoginUserAdd_DeleteBookLogoutUser extends TestBase {
 
         bookPage = new BookPage(app.driver);
         Assert.assertEquals(bookPage.getTitleBook(), expectedBookTitle, "Expected and Actual are not same");
-
-//        bookPage.checkThatSelectedBookOpened();
         bookPage.waitForLoading();
-//        bookPage.waitForLoadingBookInfoForm();
         bookPage.waitProfileButtonAfterScroll();
-//        bookPage.scrollToProfileButton();
-//        bookPage.waitForLoadingProfileButton();
         bookPage.clickAddToYourCollectionButton();
-
-//        alertHandling = new AlertHandling(app.driver);
         bookPage.simpleAlertHandling();
 
         bookPage.waitForLoading();
         bookPage.waitProfileButtonAfterScroll();
-//        bookPage.scrollToProfileButton();
-//        bookPage.waitForLoadingProfileButton();
         bookPage.clickProfileButton();
 
         profilePage.waitForLoadingProfileForm();
-//        profilePage.checkThatBookAdded();
         Assert.assertEquals(profilePage.getAddedBookTitle(), expectedBookTitle, "Expected and Actual are not same");
 
         profilePage.clickDeleteButtonRow();
+
         profilePage.waitForLoadingModalAlert();
         profilePage.modalAlertHandling();
         profilePage.simpleAlertHandling();
+        
         profilePage.checkThatBookDeleted();
+
         profilePage.clickLogOutButton();
         loginPage.confirmLoginFormOpened();
     }

@@ -58,13 +58,6 @@ public class ProfilePage extends PageBase {
         getWait().forClickable(profileForm);
     }
 
-//    public void checkThatBookAdded() {
-//        WebElement title = driver.findElement(By.id("see-book-Git Pocket Guide"));
-//        String actualTitle = title.getText();
-//        String expectedElementText = "Git Pocket Guide";
-//        Assert.assertEquals(actualTitle, expectedElementText, "Expected and Actual are not the same");
-//    }
-
     public String getAddedBookTitle() {
         return addedBookTitle.getText();
     }

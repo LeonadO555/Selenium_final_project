@@ -46,7 +46,7 @@ public class Wait {
         }
     }
 
-    public void forAlertPresence(WebDriver driver) {
+    public void forAlertPresence() {
         setWait().until(ExpectedConditions.alertIsPresent());
     }
 }
