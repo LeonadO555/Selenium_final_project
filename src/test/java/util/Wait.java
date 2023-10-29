@@ -11,7 +11,7 @@ import java.time.Duration;
 public class Wait {
     public WebDriver driver;
     public WebDriverWait wait;
-    Duration TIMEOUT = Duration.ofSeconds(20);
+    Duration TIMEOUT = Duration.ofSeconds(15);
 
     public Wait(WebDriver driver) {
         this.driver = driver;
@@ -44,5 +44,9 @@ public class Wait {
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
+    }
+
+    public void forAlertPresence() {
+        setWait().until(ExpectedConditions.alertIsPresent());
     }
 }

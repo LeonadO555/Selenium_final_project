@@ -1,4 +1,4 @@
-package e2e.ui;
+package e2e;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

@@ -1,4 +1,4 @@
-package e2e.ui;
+package e2e.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,5 +20,10 @@ public class PageBase {
     public void click(WebElement element) {
         element.isDisplayed();
         element.click();
+    }
+
+    public void simpleAlertHandling() {
+        getWait().forAlertPresence();
+        driver.switchTo().alert().accept();
     }
 }
