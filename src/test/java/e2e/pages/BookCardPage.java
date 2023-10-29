@@ -1,54 +1,53 @@
 package e2e.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import util.ScrollUtils;
 import java.time.Duration;
-import java.util.NoSuchElementException;
 
 public class BookCardPage extends PageBase {
     public BookCardPage(WebDriver driver) {
         super(driver);
     }
-    @FindBy(xpath = "//span[contains(.,'Profile')]")
-    WebElement profilePageButton;
-    @FindBy(xpath = "//*[contains(text(), 'Book Store API')]")
-    WebElement bookStoreApi;
-    @FindBy(xpath = "//*[@title='Delete']")
-    WebElement deleteButton;
-    @FindBy(xpath = "//*[@id='closeSmallModal-ok']")
-    WebElement deleteOkButton;
-    public void waitForLoading() {
-       getWait().forVisibility(profilePageButton);
-    }
-    public void scrollToLoginButton() {
-        ScrollUtils.scrollToElement(driver, bookStoreApi);
-        getWait().forVisibility(bookStoreApi);
+
+    @FindBy(xpath = "//*[contains(text(), 'Add To Your Collection')]")
+    WebElement addToYourCollectionButton;
+    @FindBy(xpath = "//*[contains(text(), 'Profile')]")
+    WebElement profileButton;
+
+    public void scrollToAddYourCollectionButton() {
+        ScrollUtils.scrollToElement(driver, addToYourCollectionButton);
+        getWait().forVisibility(addToYourCollectionButton);
     }
 
-    public void clickOnProfilePageButton() {
+    public void waitForLoading() {
+        getWait().forVisibility(addToYourCollectionButton);
+        getWait().forClickable(profileButton);
+    }
+    public void clickAddToYourCollectionButton(){
+        addToYourCollectionButton.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            WebElement profilePageButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(.,'Profile')]")));
-            profilePageButton.click();
-        } catch (TimeoutException e) {
-            System.out.println("Element not found: " + e.getMessage());
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+        } catch (TimeoutException noAlertException) {
+            }
+    }
+
+    public boolean isBookAdded(String bookTitle) {
+        By bookLocator = By.xpath("//*[contains(@ng-reflect-result, '" + bookTitle + "')]");
+        try {
+            WebElement book = driver.findElement(bookLocator);
+            return !book.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return true;
         }
     }
 
-    public void clickDeleteButton() {
-        try{
-        deleteButton.click();
-    }   catch (NoSuchElementException e) {
-            System.out.println("Element not found : " + e.getMessage());
-        }
-    }
-    public void clickOnDeleteOkButton() {
-        deleteOkButton.click();
+    public void clickOnProfileButton(){
+        profileButton.click();
     }
 }

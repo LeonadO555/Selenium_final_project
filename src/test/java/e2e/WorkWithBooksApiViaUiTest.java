@@ -2,6 +2,7 @@ package e2e;
 
 import api.LoginApi;
 import api.account.Account;
+import e2e.pages.BookCardPage;
 import e2e.pages.BookStorePage;
 import e2e.pages.LoginPage;
 import e2e.pages.ProfilePage;
@@ -15,6 +16,7 @@ public class WorkWithBooksApiViaUiTest extends TestBase {
     LoginApi loginApi;
     LoginPage loginPage;
     ProfilePage profilePage;
+    BookCardPage bookCardPage;
     BookStorePage bookStorePage;
 
     @Test
@@ -33,22 +35,30 @@ public class WorkWithBooksApiViaUiTest extends TestBase {
 
         String newAccountUserName = newAccountData.getUserName();
         String newAccountPassword = newAccountData.getPassword();
+        String bookTitle = "Git Pocket Guide";
 
         loginPage = new LoginPage(app.driver);
         loginPage.loginWithRegistrationData(newAccountUserName, newAccountPassword);
         loginPage.confirmSuccessfulLogin();
-//
-//        bookStorePage = new BookStorePage(app.driver);
-//        bookStorePage.waitForLoading();
-//        bookStorePage.clickOnBooksCard();
-//        bookStorePage.waitForLoading();
-//        Assert.assertTrue(bookStorePage.isBookAdded("Git Pocket Guide"));
-//
-//        profilePage = new ProfilePage(app.driver);
-//        profilePage.clickGoToBookStoreButton();
-//        profilePage.waitForLoading();
-//        profilePage.clickDeleteButton();
-//        Assert.assertTrue(profilePage.isBookDeleted("Git Pocket Guide"));
+
+        bookStorePage = new BookStorePage(app.driver);
+        bookStorePage.waitForLoading();
+        bookStorePage.scrollToThirdBook();
+        bookStorePage.waitForLoading();
+        bookStorePage.clickOnBooksCard();
+
+        bookCardPage = new BookCardPage(app.driver);
+        bookCardPage.scrollToAddYourCollectionButton();
+        bookCardPage.waitForLoading();
+        bookCardPage.clickAddToYourCollectionButton();
+        Assert.assertTrue(bookCardPage.isBookAdded(bookTitle));
+        bookCardPage.clickOnProfileButton();
+
+        profilePage = new ProfilePage(app.driver);
+        profilePage.waitForLoading();
+        profilePage.clickDeleteButton();
+        profilePage.waitForLoading();
+        Assert.assertTrue(profilePage.isBookDeleted(bookTitle));
     }
 }
 
