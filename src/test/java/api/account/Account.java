@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 public class Account extends ApiBase {
 
     Faker faker = new Faker();
+    String randomUsername = faker.internet().uuid();
 
     private static final Logger logger = LoggerFactory.getLogger(Account.class);
 
@@ -43,7 +44,7 @@ public class Account extends ApiBase {
 
     public RegisterModelDto createNewRandomAccount() {
         RegisterModelDto register = new RegisterModelDto();
-        register.setUserName(faker.internet().uuid());
+        register.setUserName(randomUsername);
         register.setPassword("Abc123$@&");
         return register;
     }
