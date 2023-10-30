@@ -13,18 +13,11 @@ import lombok.NoArgsConstructor;
 
 public class LoginModel {
 
-    @JsonProperty("UserId")
-    private String UserId;
     @JsonProperty("userName")
     private String userName;
 
     @JsonProperty("password")
     private String password;
-
-    public String getUserId() {
-
-        return UserId;
-    }
 
     public void setUserName(String userName) {
 

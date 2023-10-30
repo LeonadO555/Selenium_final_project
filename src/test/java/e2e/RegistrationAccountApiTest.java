@@ -1,29 +1,34 @@
 package e2e;
 
+import api.LoginApi;
 import api.account.Account;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import schemas.RegisterModelDto;
 
 public class RegistrationAccountApiTest {
-    Account account;
+
+    LoginApi loginApi;
+    Account account = new Account();
+
     @Test
     public void registrationAccountApiTest() {
-        account = new Account();
-        JsonPath createdAccount = account.createAccount(201).jsonPath();
-        String userId = createdAccount.getString("UserId");
+        RegisterModelDto newAccountData = account.createNewRandomAccount();
+        JsonPath createdAccount = account.registerNewAccount(newAccountData).jsonPath();
+        String userId = createdAccount.getString("userID");
 
-        if (userId != null) {
-            String expectedUserName = account.randomDataForCreateAccount().getUserName();
-            JsonPath actualCreatedAccount = account.getAccount(200, userId).jsonPath();
-            String actualUserName = actualCreatedAccount.getString("userName");
-            Assert.assertEquals(actualUserName, expectedUserName);
 
-            account.deleteAccount(200, userId);
-            JsonPath actualDeletedContact = account.getAccount(500, userId).jsonPath();
-            Assert.assertEquals(actualDeletedContact.getString("message"), "Error! This user doesn't exist in our DB");
-        } else {
-            System.out.println("UserId is null or not present in the response.");
-        }
+        String token = account.generateToken(newAccountData);
+        loginApi = new LoginApi(token);
+        Assert.assertTrue(account.authorizeAccount(newAccountData, token));
+
+        JsonPath expectedCreatedAccount = loginApi.getAccount(userId).jsonPath();
+        Assert.assertEquals(createdAccount.getString("username"), expectedCreatedAccount.getString("username"), "Usernames should match");
+
+        loginApi.deleteAccount(userId);
+        Response response = account.deleteAccount(newAccountData);
+        Assert.assertEquals(response.jsonPath().getString("message"), "User not found!", "User should be deleted");
     }
 }

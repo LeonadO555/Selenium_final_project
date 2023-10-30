@@ -2,40 +2,50 @@ package api.account;
 
 import api.ApiBase;
 import com.github.javafaker.Faker;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.slf4j.LoggerFactory;
 import schemas.RegisterModelDto;
+import org.slf4j.Logger;
 
 public class Account extends ApiBase {
-    Response response;
-    RegisterModelDto dto;
 
-    public RegisterModelDto randomDataForCreateAccount() {
-        Faker faker = new Faker();
-        dto = new RegisterModelDto();
-        String userName = faker.internet().uuid();
-        dto.setUserName(userName);
-        dto.setPassword("Abc123$@");
-        return dto;
-    }
+    Faker faker = new Faker();
+    String randomUsername = faker.internet().uuid();
 
-    public Response createAccount(Integer code) {
+    private static final Logger logger = LoggerFactory.getLogger(Account.class);
+
+    public Response registerNewAccount(RegisterModelDto user) {
         String endPoint = "/Account/v1/User";
-        response = postRequest(endPoint, code, randomDataForCreateAccount());
-        response.as(RegisterModelDto.class);
+        Response response = postRequest(endPoint, 201, user);
+        logger.info("Registered new account: {}", user.getUserName());
         return response;
     }
 
-    public Response deleteAccount(Integer code, String UserId) {
-        String endPoint = "/Account/v1/User/{UUID}";
-        response = deleteRequest(endPoint, code, "UUID", "UserId");
-        return response;
+    public String generateToken(RegisterModelDto user) {
+        String endPoint = "/Account/v1/GenerateToken";
+        Response response = postRequest(endPoint, 200, user);
+        JsonPath jsonPath = response.jsonPath();
+        return "Bearer " + jsonPath.getString("token");
     }
 
-    public Response getAccount(Integer code, String UserId) {
-        String endPoint = "/Account/v1/User/{UUID}";
-        response = getRequestWithParam(endPoint, code, "UUID", "UserId");
-        return response;
+    public boolean authorizeAccount(RegisterModelDto user, String token) {
+        String endPoint = "/Account/v1/Authorized";
+        Response response = postRequest(endPoint, 200, user);
+        response.then().assertThat().statusCode(200);
+        return response.asString().equalsIgnoreCase("true");
     }
 
+
+    public Response deleteAccount(RegisterModelDto user) {
+        String endPoint = "/Account/v1/Authorized";
+        return postRequest(endPoint, 404, user);
+    }
+
+    public RegisterModelDto createNewRandomAccount() {
+        RegisterModelDto register = new RegisterModelDto();
+        register.setUserName(randomUsername);
+        register.setPassword("Abc123$@&");
+        return register;
+    }
 }
-
