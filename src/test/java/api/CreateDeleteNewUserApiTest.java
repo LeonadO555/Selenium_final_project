@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import schemas.RegisterModeDTO;
 
 
-
 public class CreateDeleteNewUserApiTest {
 
     Authorization authorization;
@@ -21,7 +20,7 @@ public class CreateDeleteNewUserApiTest {
 
     public void createDeleteNewUserApiTest() {
         RegisterModeDTO newUserData = newUser.generateNewRandomUser();//new user
-        JsonPath createdUser = newUser.registerNewUser(newUserData).jsonPath();//authorization
+        JsonPath createdUser = newUser.registerNewUser(newUserData).jsonPath();//registration
         String userId = createdUser.getString("userID");
 
         String token = newUser.generateToken(newUserData);
@@ -29,10 +28,9 @@ public class CreateDeleteNewUserApiTest {
 
         Assert.assertTrue(newUser.isAuthorized(newUserData));
 
-        authorization.getUser(userId);//check out
-
-        JsonPath expectedCreatedUser = authorization.getUser(userId).jsonPath();
-        Assert.assertEquals(createdUser.getString("username"), expectedCreatedUser.getString("username"), createdUser + "is not equal to " + expectedCreatedUser);
+        String actualCreatedUser = authorization.getUser(userId).jsonPath().getString("username");
+        String expectedCreatedUser = newUserData.getUserName();
+        Assert.assertEquals(actualCreatedUser, expectedCreatedUser, actualCreatedUser + "is not equal to " + expectedCreatedUser);
 
         authorization.deleteUser(userId);//delete created user
         Response response = newUser.isDeleted(newUserData);

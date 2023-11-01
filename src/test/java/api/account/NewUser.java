@@ -10,6 +10,7 @@ import schemas.RegisterModeDTO;
 public class NewUser extends ApiBase {
 
     Faker faker = new Faker();
+    String username = faker.internet().uuid();
 
     public Response registerNewUser(RegisterModeDTO user) {
         String endPoint = "/Account/v1/User";
@@ -41,7 +42,7 @@ public class NewUser extends ApiBase {
 
     public RegisterModeDTO generateNewRandomUser() {
         RegisterModeDTO register = new RegisterModeDTO();
-        register.setUserName(faker.internet().uuid());
+        register.setUserName(username);
         register.setPassword("registraTion123@");
         return register;
     }

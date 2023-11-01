@@ -17,6 +17,7 @@ public class RegisterModeDTO {
 
     @JsonProperty("password")
     private String password;
+    private String userId;
 
     public String getUserId() {
         return UserId;
@@ -38,8 +39,8 @@ public class RegisterModeDTO {
         return password;
     }
 
-    public void setUserId(int UserId) {
-       this.UserId = String.valueOf(UserId);
+    public void setUserId(String userId) {
+       this.userId = userId;
     }
 
     public void setFirstName(String firstName) {
