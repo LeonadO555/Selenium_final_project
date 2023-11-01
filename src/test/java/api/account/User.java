@@ -15,9 +15,9 @@ public class User extends ApiBase {
         return response;
     }
 
-    public Response deleteUser(Integer code, int id) {
+    public Response deleteUser(String id) {
         String endPoint = "/Account/v1/User/{UUID}";
-        response = deleteRequest(endPoint, code, "UUID", id);
+        response = deleteRequest(endPoint, 200, "UUID", id);
         return response;
     }
 }

@@ -20,7 +20,5 @@ public class AuthorizeUser extends ApiBase {
         String endPoint = "/Account/v1/Authorized";
         return postRequest(endPoint, 200, user).asString().equalsIgnoreCase("true");
     }
-
-
 }
 

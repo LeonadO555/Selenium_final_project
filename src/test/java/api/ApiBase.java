@@ -65,7 +65,7 @@ public class ApiBase {
         return response;
     }
 
-    public Response deleteRequest(String endPoint, Integer responseCode, String paramName, int paramValue) {
+    public Response deleteRequest(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)
                 .when()

@@ -27,7 +27,5 @@ public class Account extends ApiBase {
         response = postRequest(endPoint, code, userBody);
         return response;
     }
-
-
 }
 

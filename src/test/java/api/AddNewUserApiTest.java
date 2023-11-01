@@ -5,6 +5,7 @@ import api.account.Account;
 import api.account.AuthorizeUser;
 import api.account.User;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import schemas.RegisterViewModel;
@@ -25,15 +26,17 @@ public class AddNewUserApiTest {
         JsonPath createdUser = account.createUser(userData, 201).jsonPath();
         String userId = createdUser.getString("userID");
 
-
-        // generate token
+        // token
         authorizeUser = new AuthorizeUser();
         String token = authorizeUser.generateToken(userData);
         Assert.assertTrue(authorizeUser.userAuthorized(userData));
 
-        //check user registered
         user = new User(token);
         JsonPath actualCreatedUser = user.getUser(200, userId).jsonPath();
         Assert.assertEquals(actualCreatedUser.getString("username"), userData.getUserName());
+
+        // delete
+        user.deleteUser("userId");
+        // get error message
     }
 }
