@@ -25,6 +25,7 @@ public class ApiBase {
                 .addHeader("Authorization", token)
                 .build();
     }
+
     public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)

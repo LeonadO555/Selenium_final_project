@@ -10,12 +10,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import schemas.RegisterViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AddNewUserApiTest {
 
     Account account;
+
     User user;
     AuthorizeUser authorizeUser;
 
@@ -36,7 +34,9 @@ public class AddNewUserApiTest {
         Assert.assertEquals(actualCreatedUser.getString("username"), userData.getUserName());
 
         // delete
-        user.deleteUser("userId");
+        user.deleteUser(userId);
         // get error message
+        Response response = authorizeUser.userDeleted(userData);
+        Assert.assertEquals(response.jsonPath().getString("message"), "User not found!");
     }
 }

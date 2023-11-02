@@ -2,10 +2,7 @@ package api.account;
 
 import api.ApiBase;
 import com.github.javafaker.Faker;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import schemas.RegisterViewModel;
 
 public class Account extends ApiBase {
@@ -13,7 +10,6 @@ public class Account extends ApiBase {
     RegisterViewModel model;
     Faker faker = new Faker();
     String userName = faker.internet().uuid();
-
 
     public RegisterViewModel randomDataForCreateUser() {
         model = new RegisterViewModel();

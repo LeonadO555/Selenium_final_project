@@ -20,5 +20,10 @@ public class AuthorizeUser extends ApiBase {
         String endPoint = "/Account/v1/Authorized";
         return postRequest(endPoint, 200, user).asString().equalsIgnoreCase("true");
     }
+
+    public Response userDeleted(RegisterViewModel user) {
+        String endPoint = "/Account/v1/Authorized";
+        return postRequest(endPoint, 404, user);
+    }
 }
 
