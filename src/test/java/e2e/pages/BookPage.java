@@ -1,6 +1,7 @@
 package e2e.pages;
 
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,6 +30,7 @@ public class BookPage extends PageBase {
     }
 
     public void waitProfileButtonAfterScroll() {
+        Scroll.scrollToPageEnd(driver);
         Scroll.scrollToElement(driver, profileButton);
         getWait().forVisibility(profileButton);
         getWait().forClickable(profileButton);
@@ -37,13 +39,17 @@ public class BookPage extends PageBase {
     public void clickAddToYourCollectionButton() {
         try {
             addToYourCollectionButton.click();
-        } catch (ElementClickInterceptedException e) {
+        } catch (NoSuchElementException e) {
             e.printStackTrace();
         }
     }
-
+    
     public void clickProfileButton() {
-        profileButton.click();
+        try {
+            profileButton.click();
+        } catch (ElementClickInterceptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTitleBook() {

@@ -20,7 +20,7 @@ public class UserCanAddDeleteBookUITest extends TestBase {
     BookPage bookPage;
 
     @Test
-    public void userCanAddDeleteBookUITest() {
+    public void userCanAddDeleteBookUITest() throws InterruptedException {
         String expectedBookTitle = "Git Pocket Guide";
 
         loginPage = new LoginPage(app.driver);
@@ -42,7 +42,8 @@ public class UserCanAddDeleteBookUITest extends TestBase {
         bookPage.waitForLoading();
         bookPage.waitProfileButtonAfterScroll();
         bookPage.clickAddToYourCollectionButton();
-        bookPage.simpleAlertHandling();
+        profilePage.refreshPage();
+//        bookPage.simpleAlertHandling();
 
         bookPage.waitForLoading();
         bookPage.waitProfileButtonAfterScroll();
@@ -55,8 +56,9 @@ public class UserCanAddDeleteBookUITest extends TestBase {
 
         profilePage.waitForLoadingModalAlert();
         profilePage.modalAlertHandling();
-        profilePage.simpleAlertHandling();
-        
+        profilePage.refreshPage();
+
+//        profilePage.simpleAlertHandling();
         profilePage.checkThatBookDeleted();
 
         profilePage.clickLogOutButton();

@@ -81,4 +81,19 @@ public class ProfilePage extends PageBase {
     public void clickLogOutButton() {
         logOutButton.click();
     }
+
+   /* These @FindBy and two methods are related to simpleAlertHandling(). Saved here as an example.
+    @FindBy(xpath = "//*[@class='element-list collapse show']//li[@id='item-3']//*[@class='text']")
+    WebElement profileButton;
+
+    public void waitProfileButtonAfterScroll() {
+        Scroll.scrollToElement(driver, profileButton);
+        getWait().forVisibility(profileButton);
+        getWait().forClickable(profileButton);
+    }
+
+    public void clickProfileButton() {
+        profileButton.click();
+    }
+     */
 }
