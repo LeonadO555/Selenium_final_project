@@ -1,12 +1,12 @@
 package api;
 
 import com.github.javafaker.Faker;
-import enums.UserCredentials;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import schemas.LoginViewModel;
 
 public class Account extends ApiBase{
+    Faker faker = new Faker();
 
     public Response registerNewUser(LoginViewModel user) {
         String endPoint = "/Account/v1/User";
@@ -22,7 +22,7 @@ public class Account extends ApiBase{
         Response response = postRequest(endPoint, 200, user);
 
         JsonPath jsonPath = response.jsonPath();
-        return "Bearer " + jsonPath.getString("token");
+        return "Bearer" + jsonPath.getString("token");
     }
 
     public boolean isAuthorized(LoginViewModel user) {
@@ -36,7 +36,7 @@ public class Account extends ApiBase{
 
     public LoginViewModel generateNewRandomUser() {
         LoginViewModel register = new LoginViewModel();
-        register.setUserName("irina81");
+        register.setUserName(faker.internet().uuid());
         register.setPassword("I19811202a!");
         return register;
     }

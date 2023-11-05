@@ -22,11 +22,11 @@ public class RegistrationAuthorizationDeletionNewUser {
         JsonPath createdUser = authorizationAPI.registerNewUser(newUserData).jsonPath();
         String userId = createdUser.getString("userID");
 
-        loginPage.getUser(userId);
-
         String token = authorizationAPI.generateToken(newUserData);
         loginPage = new LoginPage(token);
         Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
+
+        loginPage.getUser(userId);
 
         JsonPath expectedCreatedUser = loginPage.getUser(userId).jsonPath();
         Assert.assertEquals(
@@ -39,8 +39,7 @@ public class RegistrationAuthorizationDeletionNewUser {
 
         loginPage.deleteUser(userId);
 
-
         Response response = authorizationAPI.isDeleted(newUserData);
         Assert.assertEquals(response.jsonPath().getString("message"), "User not found!");
     }
-}
+    }
