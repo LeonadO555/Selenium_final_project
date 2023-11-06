@@ -1,19 +1,20 @@
 package e2e;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import e2e.setup.ApplicationManager;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+import java.io.IOException;
+
 
 public class TestBase {
-    protected static ApplicationManager app = new ApplicationManager();
-
-
-    @BeforeMethod
-    public void setupTest() {
-        app.init();
+    @BeforeTest
+    public void setup() {
+        ApplicationManager.getWebDriver();
     }
 
-    @AfterMethod
-    public void tearDown() {
-        app.stop();
+    @AfterTest
+    public void teardown() throws IOException {
+        e2e.setup.ApplicationManager.closeWebDriver();
     }
 }
