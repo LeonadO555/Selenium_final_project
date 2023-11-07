@@ -9,7 +9,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 public class BookStorePage extends PageBase {
-    @FindBy(id = "login")
+    @FindBy(xpath = "//*[@id='login']")
     private WebElement loginBtn;
     @FindBy(id = "userName")
     private WebElement userName;
@@ -17,10 +17,8 @@ public class BookStorePage extends PageBase {
     private WebElement password;
     @FindBy(id = "see-book-Git Pocket Guide")
     private WebElement book;
-    @FindBy(css = ".text-right.fullButton .btn-primary")
+    @FindBy(xpath = "//*[@class ='ext-right.fullButton']//*[@class = 'btn-primary']")
     private WebElement addToCollectionBtn;
-    @FindBy(css = "label#notLoggin-label > a:nth-of-type(1)")
-    private WebElement loginSmallBtn;
 
     private void waitFor() {
         ApplicationManager.getWebDriver().manage().timeouts().implicitlyWait(Duration.of(2, ChronoUnit.SECONDS));
@@ -39,11 +37,4 @@ public class BookStorePage extends PageBase {
         book.click();
         addToCollectionBtn.click();
     }
-
-    // for unauthorized user
-    public BookStorePage selectLoginBtn() {
-        loginSmallBtn.click();
-        return this;
-    }
-
 }
