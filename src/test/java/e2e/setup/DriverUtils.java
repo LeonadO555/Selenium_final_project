@@ -9,7 +9,7 @@ public class DriverUtils {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
 
         options.addArguments("start-maximized");
-        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--remote-allow-origins=*");//
         return options;
     }
 }

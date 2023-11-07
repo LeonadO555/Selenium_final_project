@@ -15,9 +15,9 @@ public class BookStorePage extends PageBase {
     private WebElement userName;
     @FindBy(id = "password")
     private WebElement password;
-    @FindBy(id = "see-book-Git Pocket Guide")
+    @FindBy(xpath = "//*[@id='see-book-Git Pocket Guide']")
     private WebElement book;
-    @FindBy(xpath = "//*[@class ='ext-right.fullButton']//*[@class = 'btn-primary']")
+    @FindBy(css = ".text-right.fullButton .btn-primary")
     private WebElement addToCollectionBtn;
 
     private void waitFor() {
@@ -35,6 +35,7 @@ public class BookStorePage extends PageBase {
 
     public void selectAndAddBook() {
         book.click();
+        waitFor();
         addToCollectionBtn.click();
     }
 }
