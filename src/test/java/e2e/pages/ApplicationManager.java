@@ -10,7 +10,7 @@ public class ApplicationManager {
     protected void init() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.get("https://demoqa.com/books");
+        driver.get("https://demoqa.com/login");
         driver.manage().window().maximize();
     }
 
