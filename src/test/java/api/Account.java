@@ -22,7 +22,7 @@ public class Account extends ApiBase{
         Response response = postRequest(endPoint, 200, user);
 
         JsonPath jsonPath = response.jsonPath();
-        return "Bearer" + jsonPath.getString("token");
+        return "Bearer " + jsonPath.getString("token");
     }
 
     public boolean isAuthorized(LoginViewModel user) {

@@ -18,7 +18,6 @@ public class RegistrationAuthorizationDeletionNewUser {
 
         LoginViewModel newUserData = authorizationAPI.generateNewRandomUser();
 
-
         JsonPath createdUser = authorizationAPI.registerNewUser(newUserData).jsonPath();
         String userId = createdUser.getString("userID");
 
@@ -26,7 +25,7 @@ public class RegistrationAuthorizationDeletionNewUser {
         loginPage = new LoginPage(token);
         Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
 
-        loginPage.getUser(userId);
+//        loginPage.getUser(userId);
 
         JsonPath expectedCreatedUser = loginPage.getUser(userId).jsonPath();
         Assert.assertEquals(
