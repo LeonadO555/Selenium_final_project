@@ -4,6 +4,7 @@ package api;
 import api.account.Account;
 import api.account.AuthorizeUser;
 import api.account.User;
+import com.github.javafaker.Faker;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -16,11 +17,13 @@ public class AddNewUserApiTest {
 
     User user;
     AuthorizeUser authorizeUser;
+    Faker faker = new Faker();
 
     @Test
     public void addNewUserApiTest() {
+        String userName = faker.internet().uuid();
         account = new Account();
-        RegisterViewModel userData = account.randomDataForCreateUser();
+        RegisterViewModel userData = account.randomDataForUser(userName);
         JsonPath createdUser = account.createUser(userData, 201).jsonPath();
         String userId = createdUser.getString("userID");
 

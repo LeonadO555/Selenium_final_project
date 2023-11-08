@@ -5,6 +5,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import schemas.RegisterViewModel;
 
+import static io.restassured.RestAssured.given;
+
 
 public class AuthorizeUser extends ApiBase {
 
@@ -24,6 +26,11 @@ public class AuthorizeUser extends ApiBase {
     public Response userDeleted(RegisterViewModel user) {
         String endPoint = "/Account/v1/Authorized";
         return postRequest(endPoint, 404, user);
+    }
+
+    public Response login(RegisterViewModel user) {
+        String endPoint = "/Account/v1/Login/";
+        return postRequest(endPoint, 200, user);
     }
 }
 

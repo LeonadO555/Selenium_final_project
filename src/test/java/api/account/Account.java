@@ -8,10 +8,8 @@ import schemas.RegisterViewModel;
 public class Account extends ApiBase {
     Response response;
     RegisterViewModel model;
-    Faker faker = new Faker();
-    String userName = faker.internet().uuid();
 
-    public RegisterViewModel randomDataForCreateUser() {
+    public RegisterViewModel randomDataForUser(String userName) {
         model = new RegisterViewModel();
         model.setUserName(userName);
         model.setPassword("rio7W7iii#");
