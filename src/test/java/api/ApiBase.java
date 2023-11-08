@@ -50,19 +50,6 @@ public class ApiBase {
         return response;
     }
 
-    public Response putRequest(String endPoint, int responseCode, Object body, String paramName, String paramValue) {
-        Response response = RestAssured.given()
-                .spec(spec)
-                .body(body)
-                .pathParam(paramName, paramValue)
-                .log().all()
-                .put(endPoint)
-                .then().log().all()
-                .statusCode(responseCode)
-                .extract().response();
-        return response;
-    }
-
     public Response deleteRequest(String endPoint, int responseCode, String paramName, String paramValue) {
         Response response = RestAssured.given()
                 .spec(spec)

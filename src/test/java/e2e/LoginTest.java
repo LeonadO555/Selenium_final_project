@@ -4,7 +4,7 @@ import e2e.pages.LoginPage;
 import enums.AccountCredentials;
 import org.testng.annotations.Test;
 
-public class LoginApiTest extends TestBase {
+public class LoginTest extends TestBase {
     LoginPage loginPage;
     @Test
     public void userCanLoginWithValidData() {

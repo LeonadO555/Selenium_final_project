@@ -3,7 +3,7 @@
 <suite name="UserSmoke" verbose="1">
     <test name="UserSmokeTests">
         <classes>
-            <class name="e2e.RegistrationAccountApiTest"/>
+            <class name="e2e.WorkWithBooksApiViaUiTest"/>
         </classes>
     </test>
 </suite>

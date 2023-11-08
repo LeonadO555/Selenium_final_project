@@ -1,6 +1,6 @@
 package e2e;
 
-import api.LoginApi;
+import api.Login;
 import api.account.Account;
 import e2e.pages.BookCardPage;
 import e2e.pages.BookStorePage;
@@ -13,7 +13,7 @@ import schemas.RegisterModelDto;
 
 public class WorkWithBooksApiViaUiTest extends TestBase {
     Account account;
-    LoginApi loginApi;
+    Login login;
     LoginPage loginPage;
     ProfilePage profilePage;
     BookCardPage bookCardPage;
@@ -27,10 +27,10 @@ public class WorkWithBooksApiViaUiTest extends TestBase {
         String userId = createdAccount.getString("userID");
 
         String token = account.generateToken(newAccountData);
-        loginApi = new LoginApi(token);
+        login = new Login(token);
         Assert.assertTrue(account.authorizeAccount(newAccountData, token));
 
-        JsonPath expectedCreatedAccount = loginApi.getAccount(userId).jsonPath();
+        JsonPath expectedCreatedAccount = login.getAccount(userId).jsonPath();
         Assert.assertEquals(createdAccount.getString("username"), expectedCreatedAccount.getString("username"), "Usernames should match");
 
         String newAccountUserName = newAccountData.getUserName();
