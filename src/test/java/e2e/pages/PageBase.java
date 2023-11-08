@@ -25,7 +25,6 @@ public class PageBase {
         PageFactory.initElements(driver, this);
 
     }
-
     public Wait getWait() {
         return new Wait(driver);
     }
@@ -55,7 +54,6 @@ public class PageBase {
         }
 
         Files.copy(tmp.toPath(), new File(tmpFilePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
-
         File expectedImageFile = new File(expectedImageFilePath);
         if (!expectedImageFile.exists()) {
             throw new RuntimeException("Expected image file does not exist" + expectedImageFilePath);
