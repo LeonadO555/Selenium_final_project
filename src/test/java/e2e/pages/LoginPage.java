@@ -32,18 +32,17 @@ public class LoginPage extends PageBase {
         getWait().forVisibility(loginButton);
     }
 
-    public void login(AccountCredentials userName, AccountCredentials password) {
-        loginButton.click();
-        scrollToLoginButton();
-        userNameInput.sendKeys(userName.value);
-        passwordInput.sendKeys(password.value);
-        click(loginButton);
-    }
-    public void loginWithRegistrationData(String userName, String password){
-        loginButton.click();
+    public void login(String userName, String password) {
         scrollToLoginButton();
         userNameInput.sendKeys(userName);
         passwordInput.sendKeys(password);
         click(loginButton);
+    }
+
+    public void confirmSuccessfulLogin () {
+        getWait().forInvisibility(userForm);
+    }
+    public void confirmUnsuccessfulLogin(){
+        getWait().forVisibility(userForm);
     }
 }
