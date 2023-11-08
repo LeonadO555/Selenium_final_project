@@ -1,7 +1,7 @@
 package tests;
 
 import api.Account;
-import api.LoginPage;
+import api.User;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import schemas.LoginViewModel;
 
 public class RegistrationAuthorizationDeletionNewUser {
-    LoginPage loginPage;
+    User user;
 
     Account authorizationAPI = new Account();
 
@@ -22,12 +22,10 @@ public class RegistrationAuthorizationDeletionNewUser {
         String userId = createdUser.getString("userID");
 
         String token = authorizationAPI.generateToken(newUserData);
-        loginPage = new LoginPage(token);
+        user= new User(token);
         Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
 
-//        loginPage.getUser(userId);
-
-        JsonPath expectedCreatedUser = loginPage.getUser(userId).jsonPath();
+        JsonPath expectedCreatedUser = user.getUser(userId).jsonPath();
         Assert.assertEquals(
                 createdUser.getString("username"),
                 expectedCreatedUser.getString("username"),
@@ -36,7 +34,7 @@ public class RegistrationAuthorizationDeletionNewUser {
 
         authorizationAPI.login(newUserData);
 
-        loginPage.deleteUser(userId);
+        user.deleteUser(userId);
 
         Response response = authorizationAPI.isDeleted(newUserData);
         Assert.assertEquals(response.jsonPath().getString("message"), "User not found!");

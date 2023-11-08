@@ -2,9 +2,9 @@ package api;
 
 import io.restassured.response.Response;
 
-public class LoginPage extends ApiBase {
+public class User extends ApiBase {
 
-    public LoginPage(String token) {
+    public User(String token) {
         super(token);
     }
 
