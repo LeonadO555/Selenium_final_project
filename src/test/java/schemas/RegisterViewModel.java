@@ -14,4 +14,5 @@ public class RegisterViewModel {
 
     @JsonProperty("password")
     private String password;
+
 }

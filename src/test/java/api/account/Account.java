@@ -1,7 +1,6 @@
 package api.account;
 
 import api.ApiBase;
-import com.github.javafaker.Faker;
 import io.restassured.response.Response;
 import schemas.RegisterViewModel;
 

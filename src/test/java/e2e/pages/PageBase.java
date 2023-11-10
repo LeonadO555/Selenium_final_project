@@ -19,7 +19,7 @@ public class PageBase {
         PageFactory.initElements(driver, this);
     }
 
-    public Wait getWait(){
+    public Wait getWait() {
         return new Wait(driver);
     }
 
@@ -27,6 +27,7 @@ public class PageBase {
     public Logger log() {
         return logger;
     }
+
     public void click(WebElement element) {
         element.isDisplayed();
         element.click();

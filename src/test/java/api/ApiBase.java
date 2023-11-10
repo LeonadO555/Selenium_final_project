@@ -5,7 +5,6 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.testng.Assert;
 
 public class ApiBase {
     public static final String BASE_URI = "https://demoqa.com/";
