@@ -6,7 +6,7 @@ import e2e.pages.LoginPage;
 import org.testng.annotations.Test;
 
 
-public class AddBookUiVerifyBookApiTest extends TestBase {
+public class AddBookUiTest extends TestBase {
     LoginPage loginPage;
 
     BookStorePage bookStorePage;

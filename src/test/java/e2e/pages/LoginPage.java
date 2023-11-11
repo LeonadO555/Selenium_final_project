@@ -10,13 +10,13 @@ public class LoginPage extends PageBase {
         super(driver);
     }
 
+
     @FindBy(xpath = "//*[@id='login']")
     private WebElement loginBtn;
     @FindBy(id = "userName")
     private WebElement userNameInput;
     @FindBy(id = "password")
     private WebElement passwordInput;
-
 
     public void waitLogin() {
         getWait().forVisibility(loginBtn);
