@@ -25,5 +25,10 @@ public class AuthorizeUser extends ApiBase {
         String endPoint = "/Account/v1/Authorized";
         return postRequest(endPoint, 404, user);
     }
+
+    public Response login(RegisterViewModel user) {
+        String endPoint = "/Account/v1/Login/";
+        return postRequest(endPoint, 200, user);
+    }
 }
 
