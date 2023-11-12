@@ -1,6 +1,7 @@
 package api;
 
 import io.restassured.response.Response;
+import schemas.GetUserResultDTO;
 
 public class UserAPI extends ApiBase {
 
@@ -8,10 +9,9 @@ public class UserAPI extends ApiBase {
         super(token);
     }
 
-    public Response getUser(String userId) {
+    public GetUserResultDTO getUser(String userId) {
         String endPoint = "/Account/v1/User/{UserId}";
-        Response response = getRequestWithParam(endPoint, 200, "UserId", userId);
-        return response;
+        return getRequestWithParam(endPoint, 200, "UserId", userId).as(GetUserResultDTO.class);
     }
 
     public Response deleteUser(String userId) {

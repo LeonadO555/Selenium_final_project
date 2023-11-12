@@ -9,6 +9,8 @@ public class AuthorizationAPI extends ApiBase {
 
     Faker faker = new Faker();
 
+    UserDTO dto;
+
     public Response registerNewUser(UserDTO user) {
         String endPoint = "/Account/v1/User";
         return postRequest(endPoint, 201, user);
@@ -43,5 +45,17 @@ public class AuthorizationAPI extends ApiBase {
         // password hard coded due to the faker password generation bug https://github.com/faker-ruby/faker/issues/2512
         register.setPassword("NewTest567&");
         return register;
+    }
+
+    public UserDTO existedUserCredentials() {
+        dto = new UserDTO();
+        dto.setUserName("hvoronkova");
+        dto.setPassword("Newtest567!");
+        return dto;
+    }
+
+    public UserDTO loginExistedUser() {
+        String endPoint = "/Account/v1/Login";
+        return postRequest(endPoint, 200, existedUserCredentials()).as(UserDTO.class);
     }
 }
