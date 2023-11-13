@@ -61,7 +61,6 @@ public class AddBookViaUICheckAddedBookViaAPITest extends TestBase {
 
         var loginUserResponse = authorizationAPI.loginExistedUser();
         GetUserResultDTO userData = userAPI.getUser(loginUserResponse.getUserId());
-        System.out.println(userData);
         Assert.assertTrue(checkUserHasExpectedBookByTitle(userData, expectedBookTitle));
     }
 

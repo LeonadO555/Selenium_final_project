@@ -11,8 +11,6 @@ import schemas.UserDTO;
 
 public class RegisterAuthorizeDeleteNewUserAPITest {
 
-    UserAPI userAPI;
-
     AuthorizationAPI authorizationAPI = new AuthorizationAPI();
 
     @Test
@@ -26,11 +24,8 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
 
         // generate token
         String token = authorizationAPI.generateToken(newUserData);
-        userAPI = new UserAPI(token);
+        UserAPI userAPI = new UserAPI(token);
         Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
-
-        //check user registered
-        userAPI.getUser(userId);
 
         //get data of created user
         GetUserResultDTO expectedCreatedUser = userAPI.getUser(userId);
@@ -46,7 +41,8 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
         // delete created user
         userAPI.deleteUser(userId);
 
-        // verify user was deleted
+        // verify user was deleted. getUser cannot be used,
+        // because after deletion the token has been expired
         Response response = authorizationAPI.isDeleted(newUserData);
         Assert.assertEquals(response.jsonPath().getString("message"), "User not found!");
     }
