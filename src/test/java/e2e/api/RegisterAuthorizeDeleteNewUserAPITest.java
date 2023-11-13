@@ -6,11 +6,10 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import schemas.GetUserResultDTO;
 import schemas.UserDTO;
 
 public class RegisterAuthorizeDeleteNewUserAPITest {
-
-    UserAPI userAPI;
 
     AuthorizationAPI authorizationAPI = new AuthorizationAPI();
 
@@ -25,17 +24,14 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
 
         // generate token
         String token = authorizationAPI.generateToken(newUserData);
-        userAPI = new UserAPI(token);
+        UserAPI userAPI = new UserAPI(token);
         Assert.assertTrue(authorizationAPI.isAuthorized(newUserData));
 
-        //check user registered
-        userAPI.getUser(userId);
-
         //get data of created user
-        JsonPath expectedCreatedUser = userAPI.getUser(userId).jsonPath();
+        GetUserResultDTO expectedCreatedUser = userAPI.getUser(userId);
         Assert.assertEquals(
                 createdUser.getString("username"),
-                expectedCreatedUser.getString("username"),
+                expectedCreatedUser.getUsername(),
                 createdUser + "is not equal to " + expectedCreatedUser
         );
 
@@ -45,7 +41,8 @@ public class RegisterAuthorizeDeleteNewUserAPITest {
         // delete created user
         userAPI.deleteUser(userId);
 
-        // verify user was deleted
+        // verify user was deleted. getUser cannot be used,
+        // because after deletion the token has been expired
         Response response = authorizationAPI.isDeleted(newUserData);
         Assert.assertEquals(response.jsonPath().getString("message"), "User not found!");
     }
